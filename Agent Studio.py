@@ -1,4 +1,13 @@
 # Databricks notebook source
+# MAGIC %sql
+# MAGIC CREATE SCHEMA IF NOT EXISTS amine_elhelou.agent_studio;
+# MAGIC
+# MAGIC CREATE TABLE databricks_api_gold AS (
+# MAGIC   SELECT * FROM robert_mosley.sql_ai.databricks_api_pre_index
+# MAGIC )
+
+# COMMAND ----------
+
 # MAGIC %pip install --upgrade gradio==3.38.0 fastapi==0.104 uvicorn==0.24
 # MAGIC %pip install typing-extensions==4.8.0 --upgrade
 
@@ -9,10 +18,10 @@ dbutils.library.restartPython()
 # COMMAND ----------
 
 import os
-os.environ['OPENAI_API_KEY'] = dbutils.secrets.get('agent_studio','open_ai')
-os.environ['DATABRICKS_TOKEN'] = dbutils.secrets.get('agent_studio','databricks_token')
-os.environ['DATABRICKS_HOST'] = dbutils.secrets.get('agent_studio','databricks_host')
-os.environ['AGENT_STUDIO_PATH'] = dbutils.secrets.get('agent_studio','folder_path')
+os.environ['OPENAI_API_KEY'] = dbutils.secrets.get('agent_studio','open_ai_aeh')
+os.environ['DATABRICKS_TOKEN'] = dbutils.secrets.get('agent_studio','databricks_token_aeh')
+os.environ['DATABRICKS_HOST'] = dbutils.secrets.get('agent_studio','databricks_host_aeh')
+os.environ['AGENT_STUDIO_PATH'] = dbutils.secrets.get('agent_studio','folder_path_aeh')
 
 from Core.AgentCreator import AgentParser
 import gradio as gr
@@ -361,3 +370,7 @@ dbx_app.mount_gradio_app(agent_studio)
 import nest_asyncio
 nest_asyncio.apply()
 dbx_app.run()
+
+# COMMAND ----------
+
+
